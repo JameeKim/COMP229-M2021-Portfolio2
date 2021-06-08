@@ -18,7 +18,7 @@ const ProjectSchema = new mongoose.Schema(
         projectType: {
             type: [{
                 type: String,
-                enum: ["game", "webapp", "mobile", "desktop", "general"],
+                enum: ["game", "webapp", "mobile", "desktop", "web", "general"],
             }],
             default: ["game"],
         },
