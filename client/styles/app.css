@@ -1,0 +1,39 @@
+/**
+ * app.css
+ *
+ * Site-wide styles
+ *
+ * Dohyun Kim 301058465
+ * Jun. 4, 2021
+ */
+
+:root {
+    --bs-gray-light: #8c959c;
+}
+
+body {
+    padding-top: 4rem;
+}
+
+ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+a.card {
+    color: var(--bs-dark);
+    text-decoration: none;
+}
+
+.card-shadow {
+    box-shadow: 1px 1px 2px var(--bs-gray),
+        4px 4px 4px var(--bs-gray-light);
+}
+
+.card-hover {
+    transition: 0.2s;
+}
+.card-hover.card-shadow:hover {
+    box-shadow: 2px 2px 4px var(--bs-gray),
+        5px 5px 8px var(--bs-gray-light);
+}

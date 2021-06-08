@@ -1,0 +1,27 @@
+<div class="navbar navbar-expand-sm container-md d-none d-sm-flex navbar-dark bg-secondary">
+  <nav class="collapse navbar-collapse">
+    <ul class="navbar-nav mx-auto mb-2 mb-sm-0">
+      <% for (const link of navBarLinks) { %>
+      <li class="nav-item">
+        <a href="<%= link.url %>"
+          <% if (page === link.id) { %>
+          class="nav-link active" aria-current="page"
+          <% } else { %>
+          class="nav-link"
+          <% } %>>
+          <%= link.text %>
+        </a>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+</div>
+
+<div class="container-md text-light bg-secondary pt-3 pt-sm-0 pb-3">
+  <p class="text-end mx-3 mb-1">
+    Icons provided by
+    <a href="https://fontawesome.com" target="_blank" rel="noopener noreferrer" class="text-white">Font Awesome</a>
+    (<a href="https://fontawesome.com/license" target="_blank" rel="noopener noreferrer"
+      class="text-white">License</a>)
+  </p>
+</div>

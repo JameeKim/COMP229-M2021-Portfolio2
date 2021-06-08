@@ -1,0 +1,65 @@
+<h1>Contact Us</h1>
+
+<h2>Contact Information</h2>
+
+<div class="card mt-3">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Dohyun Kim <small class="text-muted">(Jamee Kim)</small></h5>
+    <address class="card-text">
+      <strong>Personal Email</strong>
+      <br>
+      <a href="mailto:jameekim@nodaplife.me">jameekim@nodaplife.me</a>
+    </address>
+    <address class="card-text">
+      <strong>College Email</strong>
+      <br>
+      <a href="mailto:dkim173@my.centennialcollege.ca">dkim173@my.centennialcollege.ca</a>
+    </address>
+  </div>
+</div>
+
+<h2 class="mt-4">Leave us a message</h2>
+
+<form method="POST">
+  <fieldset>
+    <legend>Your Information</legend>
+    <div class="row row-cols-1 row-cols-md-2 mb-3">
+      <div class="col mb-2 mb-md-0">
+        <label for="contact-first-name" class="form-label">First Name</label>
+        <input type="text" name="firstName" id="contact-first-name" class="form-control" required>
+      </div>
+      <div class="col">
+        <label for="contact-last-name" class="form-label">Last Name</label>
+        <input type="text" name="lastName" id="contact-last-name" class="form-control" required>
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 mb-3">
+      <div class="col mb-2 mb-md-0">
+        <label for="contact-email" class="form-label">Email Address</label>
+        <input type="email" name="email" id="contact-email" class="form-control" required>
+      </div>
+      <div class="col">
+        <label for="contact-phone" class="form-label">Phone Number (Optional)</label>
+        <input type="tel" name="phone" id="contact-phone" class="form-control">
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Content</legend>
+    <div class="mb-3">
+      <label for="contact-category" class="form-label">What are you contacting us about?</label>
+      <select name="category" id="contact-category" class="form-select" required>
+        <option value="default" selected disabled>Please select your option</option>
+        <option value="devRequest">Request development of a project</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="contact-message" class="form-label">Message</label>
+      <textarea name="message" id="contact-message" rows="5" class="form-control" required></textarea>
+    </div>
+  </fieldset>
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-primary">Send Message</button>
+  </div>
+</form>

@@ -1,0 +1,7 @@
+<h1>Our Projects</h1>
+
+<ul class="mt-4">
+  <% for (const game of projects.games) { %>
+  <%- include("../components/projects/item", game); %>
+  <% } %>
+</ul>
