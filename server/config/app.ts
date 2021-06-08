@@ -17,13 +17,17 @@ import mongoose from "mongoose";
 import indexRouter from "../routes/index";
 
 // launch MongoDB connection
-const dbUrl = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
-mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+const dbUri = process.env.DB_URI;
+if (!dbUri) {
+  console.error("DB_URI environment variable does not exist");
+  process.exit(1);
+}
+mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // provide the MongoDB connection result on the server log
 const db = mongoose.connection;
 db.on("error", () => console.error("connection error"));
-db.once("open", () => console.log(`Connected to MongoDB at: ${dbUrl}`));
+db.once("open", () => console.log(`Connected to MongoDB at: ${process.env.DB_HOST}`));
 
 const app = express();
 export default app;
