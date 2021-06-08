@@ -1,5 +1,5 @@
 /**
- * server/models/projects.ts
+ * server/models/project.ts
  *
  * Schema for project model shown on projects page
  *
@@ -7,9 +7,9 @@
  * Jun. 8, 2021
  */
 
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const ProjectSchema = new Schema(
+const ProjectSchema = new mongoose.Schema(
     {
         name: {
             type: String,
