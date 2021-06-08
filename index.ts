@@ -4,16 +4,18 @@
  * Entry point for the server-side
  *
  * Dohyun Kim 301058465
- * Jun. 4, 2021
+ * Jun. 8, 2021
  */
 
 import createError from "http-errors";
 import debug from "debug";
 import http from "http";
-
-import app from "./server/config/app";
+import dotenv from "dotenv";
 
 debug("portfolio:server");
+dotenv.config();
+
+import app from "./server/config/app";
 
 // Get port from environment and store in Express.
 const port = normalizePort(process.env.PORT || "3000");

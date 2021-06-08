@@ -4,7 +4,7 @@
  * Express server setup
  *
  * Dohyun Kim 301058465
- * Jun. 5, 2021
+ * Jun. 8, 2021
  */
 
 import createError, { HttpError } from "http-errors";
@@ -12,8 +12,18 @@ import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
+import mongoose from "mongoose";
 
 import indexRouter from "../routes/index";
+
+// launch MongoDB connection
+const dbUrl = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// provide the MongoDB connection result on the server log
+const db = mongoose.connection;
+db.on("error", () => console.error("connection error"));
+db.once("open", () => console.log(`Connected to MongoDB at: ${dbUrl}`));
 
 const app = express();
 export default app;
