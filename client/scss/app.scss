@@ -1,11 +1,21 @@
+// client/scss/app.scss
+//
+// Site-wide styles
+//
+// Dohyun Kim 301058465
+// Jun. 5, 2021
+
+// comment for the generated css file
 /**
- * app.css
+ * styles/app.css
  *
  * Site-wide styles
  *
  * Dohyun Kim 301058465
- * Jun. 4, 2021
+ * Jun. 5, 2021
  */
+
+@import "setup";
 
 :root {
     --bs-gray-light: #8c959c;

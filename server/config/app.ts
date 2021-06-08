@@ -4,7 +4,7 @@
  * Express server setup
  *
  * Dohyun Kim 301058465
- * Jun. 4, 2021
+ * Jun. 5, 2021
  */
 
 import createError, { HttpError } from "http-errors";
@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // static files folders
-app.use(express.static(path.join(__dirname, "../../client")));
+app.use(express.static(path.join(__dirname, "../../client/public")));
 app.use(express.static(path.join(__dirname, "../../node_modules")));
 
 // routes setup

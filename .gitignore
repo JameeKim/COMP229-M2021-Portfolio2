@@ -63,3 +63,7 @@ typings/
 # javascript files compiled from typescript
 *.js
 *.js.map
+
+# compiled css files
+client/public/**/*.css
+client/public/**/*.css.map
