@@ -15,6 +15,13 @@ const ProjectSchema = new Schema(
             type: String,
             required: true,
         },
+        projectType: {
+            type: [{
+                type: String,
+                enum: ["game", "webapp", "mobile", "desktop", "general"],
+            }],
+            default: ["game"],
+        },
         collaborationType: String,
         description: [String],
         imgPath: {
