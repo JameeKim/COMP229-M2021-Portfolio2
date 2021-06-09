@@ -55,6 +55,7 @@ export function displayProjectsPage(req: Request, res: Response, next: NextFunct
     if (err) {
       console.error(err);
       next(err);
+      return;
     }
 
     res.render("index", { title: "Projects", page: "projects", navBarLinks, projects });
