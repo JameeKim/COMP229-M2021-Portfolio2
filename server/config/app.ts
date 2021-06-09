@@ -14,6 +14,7 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import mongoose from "mongoose";
 
+import navBarLinks from "./navBarLinks";
 import indexRouter from "../routes/index";
 
 // launch MongoDB connection
@@ -45,6 +46,12 @@ app.use(cookieParser());
 // static files folders
 app.use(express.static(path.join(__dirname, "../../client/public")));
 app.use(express.static(path.join(__dirname, "../../node_modules")));
+
+// add commonly used local variables for the rendering of html
+app.use((req, res, next) => {
+  res.locals.navBarLinks = navBarLinks;
+  next();
+});
 
 // routes setup
 app.use("/", indexRouter);
