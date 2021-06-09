@@ -8,8 +8,8 @@
     "build": "concurrently -n server,client npm:build-server npm:build-client",
     "build-server": "tsc --build",
     "build-client": "sass --quiet --style=compressed --load-path=node_modules client/scss:client/public/styles",
-    "watch": "concurrently -n server,client npm:watch-server npm:watch-client",
-    "watch-server": "nodemon --config nodemon.json index.ts",
+    "watch-ts": "tsc --watch",
+    "watch-server": "nodemon",
     "watch-client": "sass --watch --update --quiet --load-path=node_modules client/scss:client/public/styles"
   },
   "dependencies": {
