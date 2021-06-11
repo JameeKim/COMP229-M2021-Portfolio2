@@ -1,0 +1,16 @@
+<h2>Edit Project</h2>
+
+<form method="post">
+  <div class="mb-3">
+    <label for="project-name" class="form-label">Name</label>
+    <input type="text" name="name" id="project-name" class="form-control" required value="<%= project.name %>">
+  </div>
+  <div class="mb-3">
+    <label for="project-collaboration-type" class="form-label">Collaboration Type</label>
+    <input type="text" name="collaborationType" id="project-collaboration-type" class="form-control"
+      value="<%= project.collaborationType %>">
+  </div>
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-primary text-light">Save</button>
+  </div>
+</form>

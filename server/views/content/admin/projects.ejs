@@ -1,0 +1,11 @@
+<h2>Manage Projects</h2>
+
+<ul class="list-group">
+  <% for (const project of projects) { %>
+  <li class="list-group-item">
+    <a href="./projects/edit/<%= project._id %>">
+      <%= project.name %>
+    </a>
+  </li>
+  <% } %>
+</ul>

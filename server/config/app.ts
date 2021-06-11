@@ -16,6 +16,7 @@ import mongoose from "mongoose";
 
 import navBarLinks from "./navBarLinks";
 import indexRouter from "../routes/index";
+import adminRouter from "../routes/admin";
 
 // launch MongoDB connection
 const dbUri = process.env.DB_URI;
@@ -55,6 +56,7 @@ app.use((req, res, next) => {
 
 // routes setup
 app.use("/", indexRouter);
+app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
