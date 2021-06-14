@@ -4,7 +4,7 @@
  * Express server setup
  *
  * Dohyun Kim 301058465
- * Jun. 8, 2021
+ * Jun. 14, 2021
  */
 
 import createError, { HttpError } from "http-errors";
@@ -13,18 +13,22 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import mongoose from "mongoose";
+import cors from "cors";
 
+// auth-related imports
+import session from "express-session";
+import passport from "passport";
+import passportLocal from "passport-local";
+import User from "../models/user";
+import flash from "connect-flash";
+
+// router-related imports
 import navBarLinks from "./navBarLinks";
 import indexRouter from "../routes/index";
 import adminRouter from "../routes/admin";
 
 // launch MongoDB connection
-const dbUri = process.env.DB_URI;
-if (!dbUri) {
-  console.error("DB_URI environment variable does not exist");
-  process.exit(1);
-}
-mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.DB_URI!, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // provide the MongoDB connection result on the server log
 const db = mongoose.connection;
@@ -43,6 +47,22 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
+
+// auth-related middlewares
+app.use(session({
+  secret: process.env.AUTH_SECRET!,
+  saveUninitialized: false,
+  resave: false,
+}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+// set up passport auth
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser);
+passport.deserializeUser(User.deserializeUser);
 
 // static files folders
 app.use(express.static(path.join(__dirname, "../../client/public")));

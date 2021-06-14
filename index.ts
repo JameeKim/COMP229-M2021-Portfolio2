@@ -4,7 +4,7 @@
  * Entry point for the server-side
  *
  * Dohyun Kim 301058465
- * Jun. 8, 2021
+ * Jun. 14, 2021
  */
 
 import createError from "http-errors";
@@ -14,6 +14,19 @@ import dotenv from "dotenv";
 
 debug("portfolio:server");
 dotenv.config();
+
+// check all necessary environment variables
+const envVars = ["DB_URI", "AUTH_SECRET"];
+const undefinedVars = [];
+for (const envVar of envVars) {
+  if (typeof(process.env[envVar]) === "undefined") {
+    undefinedVars.push(envVar);
+  }
+}
+if (undefinedVars.length > 0) {
+  console.error(`Necessary environment variables not found: ${undefinedVars.join(", ")}`);
+  process.exit(1);
+}
 
 import app from "./server/config/app";
 

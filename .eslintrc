@@ -9,6 +9,7 @@
         "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
-        "quotes": "error"
+        "quotes": "error",
+        "@typescript-eslint/no-non-null-assertion": "off"
     }
 }
