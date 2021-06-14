@@ -7,7 +7,8 @@
  * Jun. 14, 2021
  */
 
-import mongoose from "mongoose";
+import mongoose, { PassportLocalSchema } from "mongoose";
+import passportLocalMongoose from "passport-local-mongoose";
 
 const UserSchema = new mongoose.Schema(
     {
@@ -15,9 +16,13 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        password: {
-            type: String,
-            required: true,
+        created: {
+            type: Date,
+            default: Date.now,
+        },
+        updated: {
+            type: Date,
+            default: Date.now,
         },
         firstName: {
             type: String,
@@ -43,5 +48,7 @@ const UserSchema = new mongoose.Schema(
     },
 );
 
-const Model = mongoose.model("User", UserSchema);
+UserSchema.plugin(passportLocalMongoose);
+
+const Model = mongoose.model("User", UserSchema as PassportLocalSchema);
 export default Model;
