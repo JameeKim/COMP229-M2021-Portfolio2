@@ -10,6 +10,7 @@
 import { Request, Response, NextFunction } from "express";
 
 import Project from "../models/project";
+import User from "../models/user";
 
 export function displayHomePage(req: Request, res: Response, next: NextFunction): void {
   res.render("index", { title: "", page: "home" });
@@ -40,10 +41,30 @@ export function displayContactPage(req: Request, res: Response, next: NextFuncti
 }
 
 export function displayLoginPage(req: Request, res: Response, next: NextFunction): void {
-  // TODO check if the user is already logged in
-  res.render("index", { title: "Sign In", page: "login" });
+  if (!req.user) {
+    res.render("index", { title: "Sign In", page: "login", messages: req.flash("loginMessage") });
+  } else {
+    res.redirect("/");
+  }
+}
+
+export function handleLoginRequest(req: Request, res: Response, next: NextFunction): void {
+  // TODO
+}
+
+export function handleLogoutRequest(req: Request, res: Response, next: NextFunction): void {
+  req.logout();
+  res.redirect("/login");
 }
 
 export function displayRegisterPage(req: Request, res: Response, next: NextFunction): void {
-  res.render("index", { title: "Sign Up", page: "register" });
+  if (!req.user) {
+    res.render("index", { title: "Sign Up", page: "register", messages: req.flash("registerMessage") });
+  } else {
+    res.redirect("/");
+  }
+}
+
+export function handleRegisterRequest(req: Request, res: Response, next: NextFunction): void {
+  // TODO
 }

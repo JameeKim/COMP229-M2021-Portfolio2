@@ -42,6 +42,11 @@ router.post("/contact", (req, res, next) => {
 
 // sign in page
 router.get("/login", indexController.displayLoginPage);
+router.post("/login", indexController.handleLoginRequest);
+
+// sign out request
+router.get("/logout", indexController.handleLogoutRequest);
 
 // sign up page
 router.get("/register", indexController.displayRegisterPage);
+router.post("/register", indexController.handleRegisterRequest);
