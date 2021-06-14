@@ -8,6 +8,7 @@
  */
 
 import { Request, Response, NextFunction } from "express";
+import passport from "passport";
 
 import Project from "../models/project";
 import User from "../models/user";
@@ -49,7 +50,29 @@ export function displayLoginPage(req: Request, res: Response, next: NextFunction
 }
 
 export function handleLoginRequest(req: Request, res: Response, next: NextFunction): void {
-  // TODO
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      console.error(err);
+      next(err);
+      return;
+    }
+
+    if (!user) {
+      req.flash("loginMessage", "Authentication Error");
+      res.redirect("/login");
+      return;
+    }
+
+    req.login(user, (err) => {
+      if (err) {
+        console.error(err);
+        next(err);
+        return;
+      }
+
+      res.redirect("/");
+    });
+  })(req, res, next);
 }
 
 export function handleLogoutRequest(req: Request, res: Response, next: NextFunction): void {
@@ -66,5 +89,26 @@ export function displayRegisterPage(req: Request, res: Response, next: NextFunct
 }
 
 export function handleRegisterRequest(req: Request, res: Response, next: NextFunction): void {
-  // TODO
+  const newUser = new User({
+    username: req.body.username,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phone: req.body.phone || undefined,
+  });
+
+  User.register(newUser, req.body.password, (err) => {
+    if (err) {
+      console.error("Error while inserting a new user");
+      if (err.name === "UserExistsError") {
+        console.error("Error: User already exists");
+      }
+      req.flash("registerMessage", "Registration Error");
+      res.redirect("/register");
+      return;
+    }
+
+    // automatically login the registered user
+    passport.authenticate("local")(req, res, () => res.redirect("/"));
+  });
 }
