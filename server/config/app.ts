@@ -49,6 +49,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
+// static files folders
+app.use(express.static(path.join(__dirname, "../../client/public")));
+app.use(express.static(path.join(__dirname, "../../node_modules")));
+
 // auth-related middlewares
 app.use(session({
   secret: process.env.AUTH_SECRET!,
@@ -61,12 +65,9 @@ app.use(passport.session());
 
 // set up passport auth
 passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser);
-passport.deserializeUser(User.deserializeUser);
-
-// static files folders
-app.use(express.static(path.join(__dirname, "../../client/public")));
-app.use(express.static(path.join(__dirname, "../../node_modules")));
+// @ts-ignore
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // add commonly used local variables for the rendering of html
 app.use((req, res, next) => {
