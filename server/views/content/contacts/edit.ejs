@@ -1,0 +1,52 @@
+<form method="post">
+  <fieldset>
+    <legend>Contact Information</legend>
+    <div class="row row-cols-1 row-cols-md-2 mb-3">
+      <div class="col mb-2 mb-md-0">
+        <label for="contact-first-name" class="form-label">First Name</label>
+        <input type="text" name="firstName" id="contact-first-name" class="form-control" required
+          value="<%= contact.firstName %>">
+      </div>
+      <div class="col">
+        <label for="contact-last-name" class="form-label">Last Name</label>
+        <input type="text" name="lastName" id="contact-last-name" class="form-control" required
+          value="<%= contact.lastName %>">
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 mb-3">
+      <div class="col mb-2 mb-md-0">
+        <label for="contact-email" class="form-label">Email Address</label>
+        <input type="email" name="email" id="contact-email" class="form-control" required
+          value="<%= contact.email %>">
+      </div>
+      <div class="col">
+        <label for="contact-phone" class="form-label">Phone Number (Optional)</label>
+        <input type="tel" name="phone" id="contact-phone" class="form-control" value="<%= contact.phone %>">
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Content</legend>
+    <div class="mb-3">
+      <label for="contact-category" class="form-label">Contact Category</label>
+      <select name="category" id="contact-category" class="form-select" required>
+        <option value="default" disabled <%= contact.category === "default" ? "selected" : "" %>>Unselected</option>
+        <option value="devRequest" <%= contact.category === "devRequest" ? "selected" : "" %>>
+          Request development of a project
+        </option>
+        <option value="other" <%= contact.category === "other" ? "selected" : "" %>>Other</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="contact-message" class="form-label">Message</label>
+      <textarea name="message" id="contact-message" rows="5" class="form-control"
+        required><%= contact.message %></textarea>
+    </div>
+  </fieldset>
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-primary text-light">Save</button>
+    <a href="../delete/<%= contact._id %>" class="btn btn-danger ms-3">Delete</a>
+    <a href="../" class="btn btn-secondary ms-3">Cancel</a>
+  </div>
+</form>

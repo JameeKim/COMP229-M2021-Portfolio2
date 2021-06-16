@@ -8,7 +8,7 @@
  */
 
 import createError, { HttpError } from "http-errors";
-import express, { Request, Response, NextFunction } from "express";
+import express, { ErrorRequestHandler } from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
@@ -22,13 +22,17 @@ import User from "../models/user";
 import flash from "connect-flash";
 
 // router-related imports
-import { authGuardAdmin, authGuardBasic, setCommonVars } from "./middlewares";
+import { setCommonVars } from "./middlewares";
 import indexRouter from "../routes/index";
 import contactsRouter from "../routes/contacts";
 import adminRouter from "../routes/admin";
 
 // launch MongoDB connection
-mongoose.connect(process.env.DB_URI!, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.DB_URI!, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
 
 // provide the MongoDB connection result on the server log
 const db = mongoose.connection;
@@ -74,8 +78,8 @@ app.use(setCommonVars);
 
 // routes setup
 app.use("/", indexRouter);
-app.use("/contacts", authGuardBasic, contactsRouter);
-app.use("/admin", authGuardAdmin, adminRouter);
+app.use("/contacts", contactsRouter);
+app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -83,7 +87,7 @@ app.use((req, res, next) => {
 });
 
 // error handler
-app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
+app.use(((err: HttpError, req, res, _next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
@@ -91,4 +95,4 @@ app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
-});
+}) as ErrorRequestHandler);

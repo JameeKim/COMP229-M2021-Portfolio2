@@ -4,7 +4,7 @@
  * Middlewares used throughout the server
  *
  * Dohyun Kim 301058465
- * Jun. 15, 2021
+ * Jun. 16, 2021
  */
 
 import { RequestHandler } from "express";
@@ -60,7 +60,8 @@ export const authGuardFactory = (
 /**
  * Middleware that checks if the user is logged in
  */
-export const authGuardBasic: RequestHandler = authGuardFactory(() => true);
+export const authGuardBasic: RequestHandler
+    = (req, res, next) => req.isAuthenticated() ? next() : res.redirect("/login");
 
 /**
  * Middleware that only allows admin users
