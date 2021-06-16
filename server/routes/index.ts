@@ -4,7 +4,7 @@
  * Root-level routes setup
  *
  * Dohyun Kim 301058465
- * Jun. 14, 2021
+ * Jun. 16, 2021
  */
 
 import express from "express";
@@ -34,11 +34,7 @@ router.get("/services", indexController.displayServicesPage);
 
 // contact page
 router.get("/contact", indexController.displayContactPage);
-
-// temporary response for contact page form submission
-router.post("/contact", (req, res, next) => {
-  res.redirect("/", 303);
-});
+router.post("/contact", indexController.handleContactRequest);
 
 // sign in page
 router.get("/login", indexController.displayLoginPage);

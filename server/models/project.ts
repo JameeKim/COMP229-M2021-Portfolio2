@@ -4,10 +4,10 @@
  * Schema for project model shown on projects page
  *
  * Dohyun Kim 301058465
- * Jun. 15, 2021
+ * Jun. 16, 2021
  */
 
-import mongoose from "mongoose";
+import { model, Model, Schema } from "mongoose";
 
 export type ProjectType = "game" | "webapp" | "mobile" | "desktop" | "web" | "general";
 
@@ -21,7 +21,7 @@ interface Project {
     links: { name: string, url: string }[];
 }
 
-const ProjectSchema = new mongoose.Schema<Project>(
+const ProjectSchema = new Schema<Project, Model<Project>>(
     {
         name: {
             type: String,
@@ -60,5 +60,5 @@ const ProjectSchema = new mongoose.Schema<Project>(
     },
 );
 
-const Project = mongoose.model<Project>("Project", ProjectSchema);
+const Project = model<Project>("Project", ProjectSchema);
 export default Project;

@@ -4,7 +4,7 @@
  * Express server setup
  *
  * Dohyun Kim 301058465
- * Jun. 15, 2021
+ * Jun. 16, 2021
  */
 
 import createError, { HttpError } from "http-errors";
@@ -22,8 +22,9 @@ import User from "../models/user";
 import flash from "connect-flash";
 
 // router-related imports
-import { authGuardAdmin, setCommonVars } from "./middlewares";
+import { authGuardAdmin, authGuardBasic, setCommonVars } from "./middlewares";
 import indexRouter from "../routes/index";
+import contactsRouter from "../routes/contacts";
 import adminRouter from "../routes/admin";
 
 // launch MongoDB connection
@@ -73,6 +74,7 @@ app.use(setCommonVars);
 
 // routes setup
 app.use("/", indexRouter);
+app.use("/contacts", authGuardBasic, contactsRouter);
 app.use("/admin", authGuardAdmin, adminRouter);
 
 // catch 404 and forward to error handler

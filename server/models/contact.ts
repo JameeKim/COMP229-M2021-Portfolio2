@@ -4,10 +4,10 @@
  * Schema for contact model parsed from contact page form
  *
  * Dohyun Kim 301058465
- * Jun. 15, 2021
+ * Jun. 16, 2021
  */
 
-import mongoose from "mongoose";
+import { model, Model, Schema } from "mongoose";
 
 export type ContactCategory = "default" | "devRequest" | "other";
 
@@ -18,9 +18,10 @@ interface Contact {
     phone?: string;
     category: ContactCategory;
     message: string;
+    created: Date,
 }
 
-const ContactSchema = new mongoose.Schema<Contact>(
+const ContactSchema = new Schema<Contact, Model<Contact>, Contact>(
     {
         firstName: {
             type: String,
@@ -47,8 +48,12 @@ const ContactSchema = new mongoose.Schema<Contact>(
     },
     {
         collection: "contacts",
+        timestamps: {
+            createdAt: "created",
+            updatedAt: false,
+        },
     },
 );
 
-const Contact = mongoose.model<Contact>("Contact", ContactSchema);
+const Contact = model<Contact>("Contact", ContactSchema);
 export default Contact;

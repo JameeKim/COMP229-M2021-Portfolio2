@@ -1,0 +1,34 @@
+<div class="row justify-content-center mt-3">
+  <div class="col-12 col-xl-8 table-responsive">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Contact Number</th>
+          <th scope="col">Email</th>
+          <% if (user) { %>
+          <th></th>
+          <th></th>
+          <% } %>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% for (let i = 0; i < contacts.length; i++) { %>
+        <% let c = contacts[i]; %>
+        <tr>
+          <th scope="row"><%= i + 1 %></th>
+          <td><%= `${c.lastName}, ${c.firstName}` %></td>
+          <td><%= c.phone %></td>
+          <td><%= c.email %></td>
+          <% if (user) { %>
+          <td class="text-center"><a href="./edit/<%= c._id %>" class="btn btn-sm btn-secondary">Edit</a></td>
+          <td class="text-center"><a href="./delete/<%= c._id %>" class="btn btn-sm btn-danger">Delete</a></td>
+          <% } %>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -4,11 +4,12 @@
  * Root-level controllers
  *
  * Dohyun Kim 301058465
- * Jun. 15, 2021
+ * Jun. 16, 2021
  */
 
 import { Request, Response, NextFunction } from "express";
 import passport from "passport";
+import Contact from "../models/contact";
 
 import Project from "../models/project";
 import User from "../models/user";
@@ -41,6 +42,28 @@ export function displayContactPage(req: Request, res: Response, next: NextFuncti
   res.render("index", { title: "Contact Us", page: "contact" });
 }
 
+export function handleContactRequest(req: Request, res: Response, next: NextFunction): void {
+  const newContact = new Contact({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phone: req.body.phone || undefined,
+    category: req.body.category,
+    message: req.body.message,
+  });
+
+  newContact.save((err) => {
+    if (err) {
+      console.error(err);
+      req.flash("contactMessage", "Error while sending the message. Please try again later.");
+      res.redirect("/contact");
+      return;
+    }
+
+    res.redirect("/");
+  });
+}
+
 export function displayLoginPage(req: Request, res: Response, next: NextFunction): void {
   if (!req.user) {
     res.render("index", { title: "Sign In", page: "login", messages: req.flash() });
@@ -70,7 +93,7 @@ export function handleLoginRequest(req: Request, res: Response, next: NextFuncti
         return;
       }
 
-      res.redirect(user.type === "admin" ? "/admin" : "/");
+      res.redirect(user.type === "admin" ? "/admin" : "/contacts");
     });
   })(req, res, next);
 }
