@@ -43,14 +43,14 @@ export function displayContactPage(req: Request, res: Response, next: NextFuncti
 
 export function displayLoginPage(req: Request, res: Response, next: NextFunction): void {
   if (!req.user) {
-    res.render("index", { title: "Sign In", page: "login", messages: req.flash("loginMessage") });
+    res.render("index", { title: "Sign In", page: "login", messages: req.flash() });
   } else {
     res.redirect("/");
   }
 }
 
 export function handleLoginRequest(req: Request, res: Response, next: NextFunction): void {
-  passport.authenticate("local", (err, user, info) => {
+  passport.authenticate("local", (err, user: Express.User | false, info) => {
     if (err) {
       console.error(err);
       next(err);
@@ -70,7 +70,7 @@ export function handleLoginRequest(req: Request, res: Response, next: NextFuncti
         return;
       }
 
-      res.redirect("/");
+      res.redirect(user.type === "admin" ? "/admin" : "/");
     });
   })(req, res, next);
 }
@@ -82,7 +82,7 @@ export function handleLogoutRequest(req: Request, res: Response, next: NextFunct
 
 export function displayRegisterPage(req: Request, res: Response, next: NextFunction): void {
   if (!req.user) {
-    res.render("index", { title: "Sign Up", page: "register", messages: req.flash("registerMessage") });
+    res.render("index", { title: "Sign Up", page: "register", messages: req.flash() });
   } else {
     res.redirect("/");
   }

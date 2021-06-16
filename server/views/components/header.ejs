@@ -23,6 +23,11 @@
           </a>
         </li>
         <% } %>
+        <% if (user) { %>
+        <li class="nav-item">
+          <a href="/logout" class="nav-link">Sign Out</a>
+        </li>
+        <% } else { %>
         <li class="nav-item">
           <a href="/login"
             <% if (page === "login") { %>
@@ -33,9 +38,7 @@
             Sign In
           </a>
         </li>
-        <li class="nav-item">
-          <a href="/logout" class="nav-link">Sign Out</a>
-        </li>
+        <% } %>
       </ul>
     </div>
   </div>

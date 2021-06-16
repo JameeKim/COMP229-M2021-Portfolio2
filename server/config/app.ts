@@ -18,12 +18,11 @@ import cors from "cors";
 // auth-related imports
 import session from "express-session";
 import passport from "passport";
-import passportLocal from "passport-local";
 import User from "../models/user";
 import flash from "connect-flash";
 
 // router-related imports
-import navBarLinks from "./navBarLinks";
+import { authGuardAdmin, setCommonVars } from "./middlewares";
 import indexRouter from "../routes/index";
 import adminRouter from "../routes/admin";
 
@@ -70,14 +69,11 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // add commonly used local variables for the rendering of html
-app.use((req, res, next) => {
-  res.locals.navBarLinks = navBarLinks;
-  next();
-});
+app.use(setCommonVars);
 
 // routes setup
 app.use("/", indexRouter);
-app.use("/admin", adminRouter);
+app.use("/admin", authGuardAdmin, adminRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

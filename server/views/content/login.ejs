@@ -1,7 +1,7 @@
 <h1>Sign In</h1>
 
-<% if (messages.length > 0) { %>
-<div class="mb-3 alert alert-danger"><%= messages %> </div>
+<% if (messages.loginMessage) { %>
+<div class="mb-3 alert alert-danger"><%= messages.loginMessage %></div>
 <% } %>
 
 <form method="post">
