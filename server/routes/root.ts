@@ -14,6 +14,7 @@ export default router;
 
 // import the controller
 import * as controller from "../controllers/root";
+import * as userController from "../controllers/user";
 import { handleContactsAddRequest } from "../controllers/contacts";
 
 // home page
@@ -35,11 +36,11 @@ router.post("/contact", handleContactsAddRequest);
 
 // sign in page
 router.get("/login", controller.displayLoginPage);
-router.post("/login", controller.handleLoginRequest);
+router.post("/login", userController.handleLoginRequest);
 
 // sign out request
-router.get("/logout", controller.handleLogoutRequest);
+router.get("/logout", userController.handleLogoutRequest);
 
 // sign up page
 router.get("/register", controller.displayRegisterPage);
-router.post("/register", controller.handleRegisterRequest);
+router.post("/register", userController.handleRegisterRequest);
