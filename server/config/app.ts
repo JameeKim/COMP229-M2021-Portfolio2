@@ -29,9 +29,9 @@ import adminRouter from "../routes/admin";
 
 // launch MongoDB connection
 mongoose.connect(process.env.DB_URI!, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
 });
 
 // provide the MongoDB connection result on the server log
@@ -59,9 +59,9 @@ app.use(express.static(path.join(__dirname, "../../node_modules")));
 
 // auth-related middlewares
 app.use(session({
-  secret: process.env.AUTH_SECRET!,
-  saveUninitialized: false,
-  resave: false,
+    secret: process.env.AUTH_SECRET!,
+    saveUninitialized: false,
+    resave: false,
 }));
 app.use(flash());
 app.use(passport.initialize());
@@ -83,16 +83,16 @@ app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(createError(404));
+    next(createError(404));
 });
 
 // error handler
 app.use(((err: HttpError, req, res, _next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+    // render the error page
+    res.status(err.status || 500);
+    res.render("error");
 }) as ErrorRequestHandler);
