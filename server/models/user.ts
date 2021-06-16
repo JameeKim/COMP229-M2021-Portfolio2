@@ -4,13 +4,32 @@
  * Schema for user model
  *
  * Dohyun Kim 301058465
- * Jun. 14, 2021
+ * Jun. 15, 2021
  */
 
 import mongoose, { PassportLocalSchema } from "mongoose";
 import passportLocalMongoose from "passport-local-mongoose";
 
-const UserSchema = new mongoose.Schema(
+export type UserType = "admin" | "user";
+
+type User = Express.User;
+
+declare global {
+    namespace Express {
+        interface User extends mongoose.Document {
+            username: string;
+            created: Date;
+            updated: Date;
+            firstName: string;
+            lastName: string;
+            email: string;
+            phone?: string;
+            type: UserType;
+        }
+    }
+}
+
+const UserSchema = new mongoose.Schema<User>(
     {
         username: {
             type: String,
@@ -48,7 +67,8 @@ const UserSchema = new mongoose.Schema(
     },
 );
 
+// @ts-ignore
 UserSchema.plugin(passportLocalMongoose);
 
-const Model = mongoose.model("User", UserSchema as PassportLocalSchema);
-export default Model;
+const User = mongoose.model<User>("User", UserSchema as PassportLocalSchema);
+export default User;

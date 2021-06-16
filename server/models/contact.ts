@@ -4,12 +4,23 @@
  * Schema for contact model parsed from contact page form
  *
  * Dohyun Kim 301058465
- * Jun. 8, 2021
+ * Jun. 15, 2021
  */
 
 import mongoose from "mongoose";
 
-const ContactSchema = new mongoose.Schema(
+export type ContactCategory = "default" | "devRequest" | "other";
+
+interface Contact {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone?: string;
+    category: ContactCategory;
+    message: string;
+}
+
+const ContactSchema = new mongoose.Schema<Contact>(
     {
         firstName: {
             type: String,
@@ -39,5 +50,5 @@ const ContactSchema = new mongoose.Schema(
     },
 );
 
-const Model = mongoose.model("Contact", ContactSchema);
-export default Model;
+const Contact = mongoose.model<Contact>("Contact", ContactSchema);
+export default Contact;
