@@ -4,18 +4,24 @@
  * Admin menu controllers
  *
  * Dohyun Kim 301058465
- * Jun. 8, 2021
+ * Jun. 16, 2021
  */
 
-import { NextFunction, Request, Response } from "express";
+import { RequestHandler } from "express";
 
 import Project from "../models/project";
 
-export function displayAdminPanel(req: Request, res: Response, next: NextFunction): void {
-    res.render("index", { title: "Admin Panel", page: "admin" });
-}
+/**
+ * Render and show the admin panel page
+ */
+export const displayAdminPanel: RequestHandler = (req, res) => {
+    res.render("index", { title: "Admin Panel" });
+};
 
-export function displayProjects(req: Request, res: Response, next: NextFunction): void {
+/**
+ * Render and show the list of projects
+ */
+export const displayProjects: RequestHandler = (req, res, next) => {
     Project.find((err, projects) => {
         if (err) {
             console.error(err);
@@ -23,30 +29,21 @@ export function displayProjects(req: Request, res: Response, next: NextFunction)
             return;
         }
 
-        res.render("index", {
-            title: "Manage Projects",
-            page: "admin",
-            subpage: "projects",
-            projects,
-        });
+        res.render("index", { title: "Manage Projects", subpage: "projects", projects });
     });
-}
+};
 
-export function displayProjectEditPage(req: Request, res: Response, next: NextFunction): void {
-    const id = req.params.id;
-
-    Project.findById(id, {}, {}, (err, project) => {
+/**
+ * Render and show the editing page of the given project
+ */
+export const displayProjectEditPage: RequestHandler = (req, res, next) => {
+    Project.findById(req.params.id).exec((err, project) => {
         if (err) {
             console.error(err);
             next(err);
             return;
         }
 
-        res.render("index", {
-            title: "Edit Project",
-            page: "admin",
-            subpage: "project-edit",
-            project,
-        });
+        res.render("index", { title: "Edit Project", subpage: "project-edit", project });
     });
-}
+};

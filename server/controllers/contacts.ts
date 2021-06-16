@@ -68,6 +68,33 @@ export const handleContactsEditRequest: RequestHandler = (req, res, next) => {
 };
 
 /**
+ * Handle the POST request for adding a contact item
+ *
+ * **NOTE**: This is called from `/contact` route in the root-level routes.
+ */
+export const handleContactsAddRequest: RequestHandler = (req, res) => {
+  const newContact = new Contact({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phone: req.body.phone || undefined,
+    category: req.body.category,
+    message: req.body.message,
+  });
+
+  newContact.save((err) => {
+    if (err) {
+      console.error(err);
+      req.flash("contactMessage", "Error while sending the message. Please try again later.");
+      res.redirect("/contact");
+      return;
+    }
+
+    res.redirect("/");
+  });
+};
+
+/**
  * Handle the request to delete a contact item
  */
 export const handleContactsDeleteRequest: RequestHandler = (req, res, next) => {

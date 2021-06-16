@@ -17,9 +17,17 @@ export default router;
 // restrict the access the whole route to the admin users
 router.use(authGuardAdmin);
 
+// set the page variable in the rendering engine
+router.use((req, res, next) => {
+    res.locals.page = "admin";
+    next();
+});
+
 import * as controller from "../controllers/admin";
 
+// show admin panel
 router.get("/", controller.displayAdminPanel);
 
+// TODO move to a separate router
 router.get("/projects", controller.displayProjects);
 router.get("/projects/edit/:id", controller.displayProjectEditPage);

@@ -1,5 +1,5 @@
 /**
- * server/controllers/index.ts
+ * server/controllers/root.ts
  *
  * Root-level controllers
  *
@@ -7,22 +7,21 @@
  * Jun. 16, 2021
  */
 
-import { Request, Response, NextFunction } from "express";
+import { RequestHandler } from "express";
 import passport from "passport";
-import Contact from "../models/contact";
 
 import Project from "../models/project";
 import User from "../models/user";
 
-export function displayHomePage(req: Request, res: Response, next: NextFunction): void {
+export const displayHomePage: RequestHandler = (req, res) => {
   res.render("index", { title: "", page: "home" });
-}
+};
 
-export function displayAboutPage(req: Request, res: Response, next: NextFunction): void {
+export const displayAboutPage: RequestHandler = (req, res) => {
   res.render("index", { title: "About Us", page: "about" });
-}
+};
 
-export function displayProjectsPage(req: Request, res: Response, next: NextFunction): void {
+export const displayProjectsPage: RequestHandler = (req, res, next) => {
   Project.find((err, projects) => {
     if (err) {
       console.error(err);
@@ -32,48 +31,26 @@ export function displayProjectsPage(req: Request, res: Response, next: NextFunct
 
     res.render("index", { title: "Projects", page: "projects", projects });
   });
-}
+};
 
-export function displayServicesPage(req: Request, res: Response, next: NextFunction): void {
+export const displayServicesPage: RequestHandler = (req, res) => {
   res.render("index", { title: "Services", page: "services" });
-}
+};
 
-export function displayContactPage(req: Request, res: Response, next: NextFunction): void {
+export const displayContactPage: RequestHandler = (req, res) => {
   res.render("index", { title: "Contact Us", page: "contact" });
-}
+};
 
-export function handleContactRequest(req: Request, res: Response, next: NextFunction): void {
-  const newContact = new Contact({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    phone: req.body.phone || undefined,
-    category: req.body.category,
-    message: req.body.message,
-  });
-
-  newContact.save((err) => {
-    if (err) {
-      console.error(err);
-      req.flash("contactMessage", "Error while sending the message. Please try again later.");
-      res.redirect("/contact");
-      return;
-    }
-
-    res.redirect("/");
-  });
-}
-
-export function displayLoginPage(req: Request, res: Response, next: NextFunction): void {
+export const displayLoginPage: RequestHandler = (req, res) => {
   if (!req.user) {
     res.render("index", { title: "Sign In", page: "login", messages: req.flash() });
   } else {
     res.redirect("/");
   }
-}
+};
 
-export function handleLoginRequest(req: Request, res: Response, next: NextFunction): void {
-  passport.authenticate("local", (err, user: Express.User | false, info) => {
+export const handleLoginRequest: RequestHandler = (req, res, next) => {
+  passport.authenticate("local", (err, user: Express.User | false) => {
     if (err) {
       console.error(err);
       next(err);
@@ -96,22 +73,22 @@ export function handleLoginRequest(req: Request, res: Response, next: NextFuncti
       res.redirect(user.type === "admin" ? "/admin" : "/contacts");
     });
   })(req, res, next);
-}
+};
 
-export function handleLogoutRequest(req: Request, res: Response, next: NextFunction): void {
+export const handleLogoutRequest: RequestHandler = (req, res) => {
   req.logout();
   res.redirect("/login");
-}
+};
 
-export function displayRegisterPage(req: Request, res: Response, next: NextFunction): void {
+export const displayRegisterPage: RequestHandler = (req, res) => {
   if (!req.user) {
     res.render("index", { title: "Sign Up", page: "register", messages: req.flash() });
   } else {
     res.redirect("/");
   }
-}
+};
 
-export function handleRegisterRequest(req: Request, res: Response, next: NextFunction): void {
+export const handleRegisterRequest: RequestHandler = (req, res) => {
   const newUser = new User({
     username: req.body.username,
     firstName: req.body.firstName,
@@ -124,7 +101,7 @@ export function handleRegisterRequest(req: Request, res: Response, next: NextFun
     if (err) {
       console.error("Error while inserting a new user");
       if (err.name === "UserExistsError") {
-        console.error("Error: User already exists");
+        console.error("Error already exists");
       }
       req.flash("registerMessage", "Registration Error");
       res.redirect("/register");
@@ -134,4 +111,4 @@ export function handleRegisterRequest(req: Request, res: Response, next: NextFun
     // automatically login the registered user
     passport.authenticate("local")(req, res, () => res.redirect("/"));
   });
-}
+};

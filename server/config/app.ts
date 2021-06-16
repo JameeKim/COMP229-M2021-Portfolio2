@@ -23,7 +23,7 @@ import flash from "connect-flash";
 
 // router-related imports
 import { setCommonVars } from "./middlewares";
-import indexRouter from "../routes/index";
+import rootRouter from "../routes/root";
 import contactsRouter from "../routes/contacts";
 import adminRouter from "../routes/admin";
 
@@ -77,7 +77,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(setCommonVars);
 
 // routes setup
-app.use("/", indexRouter);
+app.use("/", rootRouter);
 app.use("/contacts", contactsRouter);
 app.use("/admin", adminRouter);
 
