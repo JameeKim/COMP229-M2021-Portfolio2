@@ -23,11 +23,7 @@
           </a>
         </li>
         <% } %>
-        <% if (user) { %>
-        <li class="nav-item">
-          <a href="/logout" class="nav-link">Sign Out</a>
-        </li>
-        <% } else { %>
+        <% if (!user) { %>
         <li class="nav-item">
           <a href="/login"
             <% if (page === "login") { %>
@@ -37,6 +33,23 @@
             <% } %>>
             Sign In
           </a>
+        </li>
+        <% } else { %>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle fw-bold" id="navbar-user-menu-link" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Hi, <%= user.firstName %>!
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbar-user-menu-link">
+            <li><a href="/contacts" class="dropdown-item">Business Contacts List</a></li>
+            <% if (user.type === "admin") { %>
+            <li><a href="/admin" class="dropdown-item">Admin Panel</a></li>
+            <% } %>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a href="/logout" class="dropdown-item">Sign Out</a></li>
+          </ul>
         </li>
         <% } %>
       </ul>
