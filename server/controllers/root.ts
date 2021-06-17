@@ -4,7 +4,7 @@
  * Root-level controllers
  *
  * Dohyun Kim 301058465
- * Jun. 16, 2021
+ * Jun. 17, 2021
  */
 
 import { RequestHandler } from "express";
@@ -20,14 +20,19 @@ export const displayAboutPage: RequestHandler = (req, res) => {
 };
 
 export const displayProjectsPage: RequestHandler = (req, res, next) => {
-    Project.find((err, projects) => {
+    Project.find().sort("-started").exec((err, projects) => {
         if (err) {
             console.error(err);
             next(err);
             return;
         }
 
-        res.render("index", { title: "Projects", page: "projects", projects });
+        const formatter = new Intl.DateTimeFormat("en-CA", {
+            timeZone: "UTC",
+            year: "numeric",
+            month: "short",
+        });
+        res.render("index", { title: "Projects", page: "projects", projects, formatter });
     });
 };
 

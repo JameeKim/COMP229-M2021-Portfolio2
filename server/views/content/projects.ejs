@@ -2,7 +2,16 @@
 
 <ul class="mt-4">
   <% for (const project of projects) { %>
-  <% const { name, projectType, imgPath, imgAlt, collaborationType, description, links } = project; %>
+  <% const {
+    name,
+    projectType,
+    started,
+    published,
+    imgPath,
+    imgAlt,
+    collaborationType,
+    description,
+    links } = project; %>
   <li class="card mb-3">
     <div class="row g-0">
       <img src="/images/projects/<%= imgPath %>" alt="<%= imgAlt %>"
@@ -20,6 +29,13 @@
           <% if (collaborationType) { %>
           <h6 class="card-subtitle mb-2 text-muted"><%= collaborationType %></h6>
           <% } %>
+          <p class="card-text">
+            <small>
+              <%= formatter.format(started) %>
+              ~
+              <%= published ? formatter.format(published) : "" %>
+            </small>
+          </p>
           <% for (const paragraph of description) { %>
           <p class="card-text mb-1"><%- paragraph %></p>
           <% } %>

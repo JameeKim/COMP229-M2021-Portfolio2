@@ -4,7 +4,7 @@
  * Schema for project model shown on projects page
  *
  * Dohyun Kim 301058465
- * Jun. 16, 2021
+ * Jun. 17, 2021
  */
 
 import { model, Model, Schema } from "mongoose";
@@ -15,6 +15,8 @@ interface Project {
     name: string;
     projectType: ProjectType[];
     collaborationType?: string;
+    started: Date,
+    published?: Date,
     description: string[];
     imgPath: string;
     imgAlt: string;
@@ -35,6 +37,14 @@ const ProjectSchema = new Schema<Project, Model<Project>>(
             default: ["game"],
         },
         collaborationType: String,
+        started: {
+            type: Date,
+            default: () => {
+                const now = new Date();
+                return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+            },
+        },
+        published: Date,
         description: [String],
         imgPath: {
             type: String,
