@@ -16,6 +16,7 @@ import Contact from "../models/contact";
  */
 export const displayContactsListPage: RequestHandler = (req, res, next) => {
     Contact.find()
+        .select("firstName lastName email phone") // reduce the amount of data for network bandwidth
         .sort("lastName firstName created") // sort by name
         .exec((err, contacts) => {
             if (err) {
