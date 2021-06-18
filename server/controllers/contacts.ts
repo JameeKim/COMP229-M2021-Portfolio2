@@ -4,7 +4,7 @@
  * Controllers for contacts list
  *
  * Dohyun Kim 301058465
- * Jun. 17, 2021
+ * Jun. 18, 2021
  */
 
 import { RequestHandler } from "express";
@@ -25,7 +25,12 @@ export const displayContactsListPage: RequestHandler = (req, res, next) => {
                 return;
             }
 
-            res.render("index", { title: "Contacts List", subpage: "show", contacts });
+            res.render("index", {
+                title: "Contacts List",
+                subpage: "show",
+                contacts,
+                scripts: ["contacts/delete-confirm"],
+            });
         });
 };
 
@@ -40,7 +45,12 @@ export const displayContactsEditPage: RequestHandler = (req, res, next) => {
             return;
         }
 
-        res.render("index", { title: "Edit Contact", subpage: "edit", contact });
+        res.render("index", {
+            title: "Edit Contact",
+            subpage: "edit",
+            contact,
+            scripts: ["contacts/delete-confirm"],
+        });
     });
 };
 

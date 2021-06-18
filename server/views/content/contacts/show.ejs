@@ -23,10 +23,18 @@
         <td><%= c.email %></td>
         <% if (user) { %>
         <td class="text-center"><a href="/contacts/edit/<%= c._id %>" class="btn btn-sm btn-secondary">Edit</a></td>
-        <td class="text-center"><a href="/contacts/delete/<%= c._id %>" class="btn btn-sm btn-danger">Delete</a></td>
+        <td class="text-center">
+          <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+            data-bs-target="#contacts-delete-confirm-modal" data-contacts-delete-number="<%= i + 1 %>"
+            data-contacts-delete-name="<%= c.firstName %> <%= c.lastName %>" data-contacts-delete-id="<%= c._id %>">
+            Delete
+          </button>
+        </td>
         <% } %>
       </tr>
       <% } %>
     </tbody>
   </table>
 </div>
+
+<%- include("../../components/contacts/delete-confirm.ejs") %>

@@ -46,7 +46,14 @@
   </fieldset>
   <div class="d-flex justify-content-center">
     <button type="submit" class="btn btn-primary text-light">Save</button>
-    <a href="../delete/<%= contact._id %>" class="btn btn-danger ms-3">Delete</a>
+    <button type="button" class="btn btn-danger ms-3" data-bs-toggle="modal"
+      data-bs-target="#contacts-delete-confirm-modal"
+      data-contacts-delete-name="<%= contact.firstName %> <%= contact.lastName %>"
+      data-contacts-delete-id="<%= contact._id %>">
+      Delete
+    </button>
     <a href="../" class="btn btn-secondary ms-3">Cancel</a>
   </div>
 </form>
+
+<%- include("../../components/contacts/delete-confirm.ejs") %>

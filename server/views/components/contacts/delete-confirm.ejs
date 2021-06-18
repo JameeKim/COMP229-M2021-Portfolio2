@@ -1,0 +1,24 @@
+<div class="modal fade" id="contacts-delete-confirm-modal" tabindex="1"
+  aria-labelledby="contacts-delete-confirm-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contacts-delete-confirm-label">Delete a Contact</h5>
+      </div>
+      <div class="modal-body">
+        <p>
+          Are you sure you want to delete
+          <span id="contacts-delete-confirm-detailed">
+            contact #<span id="contacts-delete-confirm-number"></span>
+            from <span id="contacts-delete-confirm-name"></span>?
+          </span>
+          <span id="contacts-delete-confirm-this">this contact?</span>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <a href="#" class="btn btn-danger" id="contacts-delete-confirm-link">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -26,6 +26,11 @@
 
   <!-- Scripts -->
   <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+  <% if (locals.scripts) { %>
+  <% for (const s of scripts) { %>
+  <script src="/scripts/<%= s %>.js"></script>
+  <% } %>
+  <% } %>
 </body>
 
 </html>
